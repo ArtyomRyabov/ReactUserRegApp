@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>React_starter_task</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    class LoginPasswordForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {username: '', password: ''};
+
+            this.usernameChange = this.usernameChange.bind(this);
+            this.passwordChange = this.passwordChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        usernameChange(event) {
+            this.setState({username: event.target.value});
+        }
+        passwordChange(event) {
+            this.setState({password: event.target.value});
+        }
+
+        handleSubmit(event) {
+            alert('A name was submitted: ' + this.state.username + this.state.password);
+            this.props.onChange(this.state.username, this.state.password);
+            event.preventDefault();
+        }
+
+        render() {
+            return (
+                <div className="registrationBlock">
+                    <div className="formBlock">
+                        <form onSubmit={this.handleSubmit}>
+                            <label className="formLabel">
+                                <div className="nameLabelText">Username</div><br/>
+                                <input type="text" value={this.state.username} onChange={this.usernameChange} /><br/>
+                            </label>
+                            <label className="formLabel">
+                                <div className="nameLabelText">Password</div><br/>
+                                <input type="text" value={this.state.password} onChange={this.passwordChange} /><br/>
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                    </div>
+                    <div className="textBlock">
+                        Welcome to the team!<br/>
+                        Please proceed the registration<br/>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    class ProgressBar extends React.Component {
+
+        constructor(props) {
+            super(props);
+            this.state = {number: ''};
+
+            this.progressChange = this.progressChange.bind(this);
+        }
+
+        progressChange(event) {
+            this.setState({number: event.target.value});
+        }
+
+        render() {
+            var roundWidth = {width : '35px', height: '35px', top: '80px', lineHeight: '33px'};
+            if (this.props.step == 1){
+                return (
+                    <div className="progressBarBlock">
+                        <div className="progressPointFirst" style={roundWidth}>1</div>
+                        <div className="progressPointSecond">2</div>
+                        <div className="progressPointThird">3</div>
+                        <hr className="lineCenter"/>
+                    </div>
+                );
+            }
+            if (this.props.step == 2){
+                return (
+                    <div className="progressBarBlock">
+                        <div className="progressPointFirst">1</div>
+                        <div className="progressPointSecond" style={roundWidth}>2</div>
+                        <div className="progressPointThird">3</div>
+                        <hr className="lineCenter"/>
+                    </div>
+                );
+            }
+            return (
+                <div className="progressBarBlock">
+                    <div className="progressPointFirst">1</div>
+                    <div className="progressPointSecond">2</div>
+                    <div className="progressPointThird"style={roundWidth}>3</div>
+                    <hr className="lineCenter"/>
+                </div>
+            );
+        }
+    }
+
+    class ChosePaymentForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                paymentType: 'cash',
+                cash: true,
+                card: false
+            };
+
+            this.cashInputChange = this.cashInputChange.bind(this);
+            this.cardInputChange = this.cardInputChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        cashInputChange(event) {
+            this.setState({
+                paymentType: 'cash',
+                cash: true,
+                card: false
+
+            });
+            console.log(this.state);
+        }
+
+        cardInputChange(event) {
+            this.setState({
+                paymentType: 'card',
+                cash: false,
+                card: true
+            });
+            console.log(this.state);
+        }
+
+        handleSubmit(event) {
+            alert('A pay was submitted: ' + this.state.paymentType );
+            this.props.onChange(this.state.paymentType);
+            event.preventDefault();
+        }
+
+
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <h2>Chose payment form</h2><br/>
+                    <label>
+                        Cash:
+                        <input
+                            name="Cash"
+                            type="checkbox"
+                            checked={this.state.cash}
+                            onChange={this.cashInputChange} />
+                    </label>
+                    <br />
+                    <label>
+                        Credit card:
+                        <input
+                            name="Credit card"
+                            type="checkbox"
+                            checked={this.state.card}
+                            onChange={this.cardInputChange} />
+                    </label><br/>
+                    <input type="submit" value="Submit" />
+                </form>
+            );
+        }
+    }
+
+    class PersonalDataForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                firstName: '',
+                lastName: '',
+                age: '',
+                agree: false
+            };
+
+            this.agreeChange = this.agreeChange.bind(this);
+            this.firstNameChange = this.firstNameChange.bind(this);
+            this.lastNameChange = this.lastNameChange.bind(this);
+            this.ageChange = this.ageChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        agreeChange(event) {
+            if(this.state.agree){
+                this.setState({
+                    agree: false
+
+                });
+            }else{
+                this.setState({
+                    agree: true
+
+                });
+            }
+        }
+
+        firstNameChange(event) {
+            this.setState({firstName: event.target.value});
+        }
+
+        lastNameChange(event) {
+            this.setState({lastName: event.target.value});
+        }
+
+        ageChange(event) {
+            this.setState({age: event.target.value});
+        }
+
+        handleSubmit(event) {
+            alert('A personal information was submitted: ' + this.state.firstName + this.state.lastName + this.state.age);
+            if(this.state.agree){
+                this.props.onChange(this.state.firstName, this.state.lastName, this.state.age);
+            }
+            event.preventDefault();
+        }
+
+
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <h2>Chose payment form</h2><br/>
+                    <label>
+                        <div>First name</div><br/>
+                        <input type="text" value={this.state.firstName} onChange={this.firstNameChange} /><br/>
+                    </label>
+                    <label>
+                        <div>Last name</div><br/>
+                        <input type="text" value={this.state.lastName} onChange={this.lastNameChange} /><br/>
+                    </label>
+                    <label>
+                        <div>Password</div><br/>
+                        <input type="text" value={this.state.age} onChange={this.ageChange} /><br/>
+                    </label>
+                    <label>
+                        agree with rules:
+                        <input
+                            name="Cash"
+                            type="checkbox"
+                            checked={this.state.agree}
+                            onChange={this.agreeChange} />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            );
+        }
+    }
+
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                logged: 1,
+                login : "",
+                password: "",
+                paymentType: "",
+                firstName: "",
+                lastName: "",
+                age: ""
+            };
+            this.logPassChange = this.logPassChange.bind(this);
+            this.paymentTypeChange = this.paymentTypeChange.bind(this);
+            this.personalInfChange = this.personalInfChange.bind(this);
+        }
+
+        logPassChange(newLogin, newPassword) {
+            this.setState({logged: 2, login: newLogin, password : newPassword});
+            console.log("im here and im change logpass");
+        }
+
+        paymentTypeChange(newType) {
+            this.setState({logged: 3, paymentType: newType});
+            console.log("im here and im change payment");
+        }
+
+        personalInfChange(newFirstName,newLastName,newAge) {
+            this.setState({logged: 4, age: newAge, firstName: newFirstName, lastName: newLastName});
+            console.log("im here and im change personal information");
+        }
+        render() {
+            console.log(this.state);
+            if (this.state.logged == 1) {
+                return (
+                    <div>
+                        <ProgressBar step = {1}/>
+                        <LoginPasswordForm onChange={this.logPassChange} />
+                    </div>
+                );
+            }
+            if (this.state.logged == 2){
+                return (
+                    <div>
+                        <ProgressBar step = {2}/>
+                        <ChosePaymentForm onChange={this.paymentTypeChange}/>
+                    </div>
+                );
+            }
+            if (this.state.logged == 3){
+                return (
+                    <div>
+                        <ProgressBar step = {3}/>
+                        <PersonalDataForm onChange={this.personalInfChange}/>
+                    </div>
+                );
+            }
+            return (
+                <div>
+                    <h1>IM HERE NOW!!!!!!!!!!!!!</h1>
+                </div>
+            );
+
+        }
+    }
+
+    const element = (
+        <div className="mainFrame">
+            <h2 className="regText">Registration</h2>
+            <App/>
+        </div>
+    );
+    ReactDOM.render(
+        element,
+        document.getElementById('root')
+    );
+
+</script>
+</body>
+</html>
